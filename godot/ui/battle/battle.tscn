@@ -1,0 +1,307 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://ui/elements/dialogue_box.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/ui/buttons/engage_grey.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/buttons/engage_colored.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/buttons/inv_colored.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/buttons/switch_grey.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/buttons/inv_grey.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/buttons/flee_colored.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/buttons/flee_grey.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/buttons/switch_colored.png" type="Texture" id=9]
+[ext_resource path="res://ui/elements/creature.tscn" type="PackedScene" id=10]
+[ext_resource path="res://ui/battle/battle.gd" type="Script" id=11]
+[ext_resource path="res://assets/sprites/typhlosion/back.png" type="Texture" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "ally_attack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ally/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 12, 8 ), Vector2( 33.6957, -0.32959 ), Vector2( 12, 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Enemy/Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "ally_defeat"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ally/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 12, 8 ), Vector2( 12, 106 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "enemy_attack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 32, 8 ), Vector2( 22.5559, 13.366 ), Vector2( 32, 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Ally/Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "enemy_defeat"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 32, 8 ), Vector2( 32, 144 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "state_initiate"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Buttons:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OptionsBox:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("MessageBox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Ally:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Enemy:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "state_text"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("OptionsBox:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Buttons:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("MessageBox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="Battle" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+focus_mode = 2
+color = Color( 0.972549, 0.972549, 0.972549, 1 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ally" parent="." instance=ExtResource( 10 )]
+anchor_top = 1.0
+anchor_right = 0.0
+margin_top = -107.0
+margin_right = 72.0
+margin_bottom = -43.0
+
+[node name="Sprite" parent="Ally" index="0"]
+position = Vector2( 12, 8 )
+texture = ExtResource( 12 )
+hframes = 1
+
+[node name="Enemy" parent="." instance=ExtResource( 10 )]
+anchor_left = 1.0
+anchor_bottom = 0.0
+margin_left = -89.0
+margin_right = -17.0
+margin_bottom = 64.0
+
+[node name="MessageBox" parent="." instance=ExtResource( 1 )]
+anchor_top = 1.0
+margin_left = 2.0
+margin_top = -46.0
+margin_right = -2.0
+margin_bottom = -2.0
+
+[node name="OptionsBox" parent="." instance=ExtResource( 1 )]
+visible = false
+anchor_top = 1.0
+margin_left = 1.0
+margin_top = -46.0
+margin_right = -81.0
+margin_bottom = -2.0
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -79.0
+margin_top = -84.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EngageButton" type="TextureButton" parent="Buttons"]
+margin_right = 79.0
+margin_bottom = 18.0
+texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 3 )
+
+[node name="InvButton" type="TextureButton" parent="Buttons"]
+margin_top = 22.0
+margin_right = 79.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 6 )
+texture_hover = ExtResource( 4 )
+
+[node name="SwitchButton" type="TextureButton" parent="Buttons"]
+margin_top = 44.0
+margin_right = 79.0
+margin_bottom = 62.0
+texture_normal = ExtResource( 5 )
+texture_hover = ExtResource( 9 )
+
+[node name="FleeButton" type="TextureButton" parent="Buttons"]
+margin_top = 66.0
+margin_right = 79.0
+margin_bottom = 84.0
+texture_normal = ExtResource( 8 )
+texture_hover = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/ally_attack = SubResource( 1 )
+anims/ally_defeat = SubResource( 5 )
+anims/enemy_attack = SubResource( 2 )
+anims/enemy_defeat = SubResource( 6 )
+anims/state_initiate = SubResource( 3 )
+anims/state_text = SubResource( 4 )
+[connection signal="visibility_changed" from="." to="." method="_visibility_changed"]
+[connection signal="pressed" from="Buttons/EngageButton" to="." method="_on_EngageButton_pressed"]
+[connection signal="pressed" from="Buttons/InvButton" to="." method="_on_InvButton_pressed"]
+[connection signal="pressed" from="Buttons/SwitchButton" to="." method="_on_SwitchButton_pressed"]
+[connection signal="pressed" from="Buttons/FleeButton" to="." method="_on_FleeButton_pressed"]
+
+[editable path="Ally"]
+
+[editable path="Enemy"]
